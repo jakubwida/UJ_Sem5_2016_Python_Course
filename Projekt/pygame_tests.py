@@ -30,7 +30,7 @@ while True:
 			sys.exit()
 	DISPLAYSURF.fill(WHITE)
 	
-	x=x+0.0005
+	x=x+0.005
 	
 	DISPLAYSURF.blit(Ant_Img,(x,20))
 	pygame.display.update()
