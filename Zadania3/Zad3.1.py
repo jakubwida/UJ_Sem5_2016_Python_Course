@@ -10,7 +10,7 @@ print "1 czesc: ",result
 
 #2 czesc: nie kompiluje
 # for i in "qwerty": if ord(i) < 100: print i
-# niepoprawny, zamiast tego: 
+# jest niepoprawny, zamiast tego: 
 for i in "qwerty": 
 	if ord(i) < 100: 
 		print "2 czesc: ",i
