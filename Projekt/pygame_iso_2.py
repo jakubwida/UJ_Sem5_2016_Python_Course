@@ -87,5 +87,5 @@ while True:
 	
 	
 	
-	draw_blocks(Map_of_blocks,3,3,3,0,0,0,screen_x_center,screen_z_center)
+	draw_blocks(Map_of_blocks,3,3,3,0,0,0,screen_x_center,screen_y_center)
 	pygame.display.update()
