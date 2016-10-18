@@ -44,16 +44,16 @@ def carthesian_to_iso(xy):
 	iso_y=(xy[0]+xy[1])/2.0
 	return [iso_x,iso_y]
 
-def draw_blocks(map_of_blocks):
+def draw_blocks(map_of_blocks,x_draw_size,y_draw_size,map_x_offset,map_y_offset,draw_zero_x,draw_zero_y):
 	x_len=len(map_of_blocks)
 	y_len=len(map_of_blocks[0])
 
-	for x in range(x_len):
-		for y in range(y_len):
+	for x in range(map_x_offset,x_draw_size):
+		for y in range(map_y_offset,y_draw_size):
 			iso_pos=carthesian_to_iso([x*16,y*16])
-			DISPLAYSURF.blit(map_of_blocks[x][y].image,(iso_pos[0],iso_pos[1]))
+			DISPLAYSURF.blit(map_of_blocks[x][y].image,(iso_pos[0]+draw_zero_x,iso_pos[1]+draw_zero_y))
 		
-				
+screen_x_center=DISPLAYSURF.get_width()/2				
 		
 #pygame.draw.rect(DISPLAYSURF, BLACK, (200, 150, 100, 50))
 while True:
@@ -65,5 +65,5 @@ while True:
 	
 	
 	
-	draw_blocks(Map_of_blocks)
+	draw_blocks(Map_of_blocks,3,3,0,0,screen_x_center,100)
 	pygame.display.update()
