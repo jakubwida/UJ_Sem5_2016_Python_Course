@@ -6,6 +6,8 @@ print(sys.version)
 import pygame
 from pygame.locals import*
 
+import pygame_iso_gameworld
+
 pygame.init()
 FPS = 30
 fpsClock = pygame.time.Clock()
@@ -23,6 +25,12 @@ Ant_Img=pygame.image.load("Ant_Example.png")
 class Map_Block():
 	def __init__(self):
 		self.image = Block_Img
+
+
+
+
+
+
 Map_of_blocks =\
 [[
 [Map_Block(),Map_Block(),Map_Block(),Map_Block(),Map_Block(),Map_Block()],
@@ -53,6 +61,11 @@ Map_of_blocks =\
 ]]			
 			
 
+world = pygame_iso_gameworld.Game_Map()
+world.construct_world([10,10,10])
+Map_of_blocks=world.world
+
+
 Map_of_blocks[0][1][1].image=Ant_Img
 
 block_x_size=16
@@ -70,7 +83,9 @@ def draw_blocks(map_of_blocks,x_draw_size,y_draw_size,z_draw_size,map_x_offset,m
 		for x in range(map_x_offset,x_draw_size):
 			for y in range(map_y_offset,y_draw_size):
 				iso_pos=carthesian_to_iso([x*16,y*16,z*16])
-				DISPLAYSURF.blit(map_of_blocks[z][x][y].image,(iso_pos[0]+draw_zero_x,iso_pos[1]+draw_zero_y))
+				image = map_of_blocks[z][x][y].image
+				if image!=None:	
+					DISPLAYSURF.blit(image,(iso_pos[0]+draw_zero_x,iso_pos[1]+draw_zero_y))
 		
 screen_x_center=DISPLAYSURF.get_width()/2	
 screen_y_center=DISPLAYSURF.get_height()/2
@@ -87,5 +102,5 @@ while True:
 	
 	
 	
-	draw_blocks(Map_of_blocks,3,3,3,0,0,0,screen_x_center,screen_y_center)
+	draw_blocks(Map_of_blocks,8,8,8,0,0,0,screen_x_center,screen_y_center)
 	pygame.display.update()
