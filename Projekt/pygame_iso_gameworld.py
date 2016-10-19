@@ -9,7 +9,7 @@ Ant_Img=pygame.image.load("Ant_Example.png")
 
 #niedkonczone ponizej
 class Abstract_Block:
-	self.container_key="Abstract_Block"
+	#self.container_key="Abstract_Block"
 	def __init__(self,xyz_coords,game_map):
 		self.image=Block_Img
 		self.xyz=xyz_coords
@@ -24,7 +24,7 @@ class Abstract_Block:
 class Block_List_Container:
 	def __init__(self):
 		self.dictionary={}
-	def add_to_container()
+#	def add_to_container()
 
 
 
