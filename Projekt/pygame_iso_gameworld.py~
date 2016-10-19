@@ -3,7 +3,6 @@ import random
 
 
 Block_Img=pygame.image.load("Block_Img.png")
-Rock_Img=pygame.image.load("Rock_Img.png")
 Ant_Img=pygame.image.load("Ant_Example.png")
 
 
@@ -13,7 +12,7 @@ class Empty_Block:
 		self.image=None
 class Rock_Block:
 	def __init__(self):
-		self.image=Rock_Img
+		self.image=Block_Img
 
 def random_bool(percent=50):
 	return random.randrange(100)<percent
