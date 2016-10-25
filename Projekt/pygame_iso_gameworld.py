@@ -7,7 +7,7 @@ Rock_Img=pygame.image.load("Rock_Img.png")
 Ant_Img=pygame.image.load("Ant_Example.png")
 
 
-#niedkonczone ponizej
+
 class Abstract_Block:
 	#self.container_key="Abstract_Block"
 	def __init__(self,xyz_coords,game_map,block_list_container):
@@ -16,13 +16,7 @@ class Abstract_Block:
 		self.Game_Map=game_map
 		self.Block_List_Container=block_list_container
 		
-		#trzeba dodac: 
-		#private_container, ktory bedzie wsadzal bloczka do 
-		#listy po utworzniu, i usuwal po zniszczeniu, 
-		#najlepiej jako osobny obiekt, ze slownikiem list tak ze latwo odniesc sie do calej listy
-		#
-		#koordynaty bloczka na mapie, wstawiane w konstruktorze, trzeba sie ogarnac jak dziala dziedziczenie konstruktorow
-		#jakis odnosnik do mapy
+		
 class Block_List_Container:
 	def __init__(self):
 		self.dictionary={}
@@ -37,27 +31,6 @@ class Block_List_Container:
 
 	def get_list_of_blocks_by_container_key(key):
 		return self.dictionary.get(key)
-
-
-
-
-
-#ponizsze na raznie nie beda uzywane
-class Tree_Block:
-	def __init__(self):
-		self.image=Tree_Img
-class Fire_Block:
-	def __init__(self):
-		self.image=Fire_Img
-class Soil_Block:
-	def __init__(self):
-		self.image=Block_Img
-class Grass_Block:
-	def __init__(self):
-		self.image=Block_Img
-
-
-#koniec niedkokonczenia
 
 class Empty_Block(Abstract_Block):
 	def __init__(self,xyz_coords,game_map,block_container):
@@ -80,13 +53,20 @@ class Game_Map:
 	def construct_world(self,xyz_size):
 		self.world=[[[ self.random_block([x,y,z])  for z in range(xyz_size[2])] for  x in range(xyz_size[0])] for y in range(xyz_size[1])]
 		
-	def get_block_at_xyz(x,y,z):
+	def get_block_at_xyz(self,x,y,z):
 		return self.world[x][y][z]
-	def set_block_at_xyz(x,y,z,Block):
+	def set_block_at_xyz(self,x,y,z,Block):
 		self.world[x][y][z]=Block
 	
+	def execute_turn(self):
+		print("trying to execute world")
+		for key,value in self.block_container.iteritems():
+			print(key,value);
+			#unfinished
+
+
 	def random_block(self,xyz_coords):
-		coin=random_bool(50)
+		coin=random_bool(10)
 		if coin:
 			return Rock_Block(xyz_coords,self,self.block_container)
 		else:
