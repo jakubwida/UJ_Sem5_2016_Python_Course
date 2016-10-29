@@ -1,48 +1,75 @@
 
+
+class Abstract_Block:
+	color=(0,0,0)
+	def __init__(self,x,y,cell_map):
+		self.x=x
+		self.y=y
+		Abstract_Block.cell_map=cell_map
+	def __str__(self):
+		retrun(color)
+	def execute(self):
+		print("executing Abstract Blocks")
+
+class Empty_Block(Abstract_Block):
+	color=(255,255,255)
+	def execute(self):
+		print("executing Empty Blocks")
+
+class Water_Block(Abstract_Block):
+	color=(0,0,255)
+	def execute(self):
+		print("executing Water Blocks")
+
+class Rock_Block(Abstract_Block):
+	color=(128,128,128)
+	def execute(self):
+		print("executing Rock Blocks")
+
 def generate_map(x_size,y_size):
-	return [[0 for x in range(x_size)] for y in range(y_size)]
-def parse_map(filename):
-	file =open(filename,'r')
-	y_len=int(file.readline())
-	list_of_lists=[]
-	for y in range(y_len):
-		inner_string = file.readline().replace("\n","")
-		inner_list = map(int,list(inner_string))
-		
-		list_of_lists.append(inner_list)
-	file.close()
-	print(list_of_lists)
-	return list_of_lists
+	return [[0 for x in range(x_size)] for y in range(y_size)]	
+
 class Cell_Map:
-	def __init__(self,map):
-		self.map=map
+	def __init__(self,filename):
+		self.parse_map(filename)
+
+	def parse_block_from_string(self,string):
+		type_dictionary={"e":Empty_Block,"r":Rock_Block,"w":Water_Block}
+		return type_dictionary.get(string,Abstract_Block)	
+		
+	def parse_map(self,filename):
+		file =open(filename,'r')
+		types_number=int(file.readline())
+		self.types_list=[self.parse_block_from_string(\
+file.readline().replace("\n",""))(-1,-1,self) for i in range(types_number)]
+		
+		print(self.types_list)
+
+		y_len=int(file.readline())
+
+
+		list_of_lists=[]
+		for y in range(y_len):
+			inner_string = file.readline().replace("\n","")
+			inner_list = list(inner_string)
+		
+			list_of_lists.append(inner_list)
+		file.close()
+
+		x_len=len(inner_list)
+		y_len=len(list_of_lists)
+		for y in range(y_len):
+			for x in range(x_len):
+				block = list_of_lists[y][x]
+				list_of_lists[y][x]=self.parse_block_from_string(block)(x,y,self)
+		self.map = list_of_lists	
+	
+	def execute_map(self):
+		for element in self.types_list:
+			element.execute()
 
 def get_cell_map():
-	return CellMap(parse_map(map_1.txt))
+	return Cell_Map("map_1.txt")
 
-def simulate_world():
-	print("tryingto simulate world")
 
-def simulate_single_block(map,x_start,y_start,x_end,y_end):
-	tempmap=[[map[y][x] for x in range(x_start,x_end)] for y in range(y_start,y_end)]
-	if(x_start-x_end==2 && y_start-y_end==2):
-		if tempmap== [[0,2],[0,0]]
-		
-	elif(x_start-x_end==1 && y_start-y_end==2)
-	elif(x_start-x_end==2 && y_start-y_end==1)
 
-	
-#ruleset
-rule_dictionary={\
-[[0,0],[0,0]]:[[0,0],[0,0]],
-[[0,0],[2,0]]:[[0,0],[0,2]],
-[[0,0],[0,2]]:[[0,0],[2,0]],
-[[2,0],[0,0]]:[[0,0],[2,0]],
-[[0,2],[0,0]]:[[0,0],[0,2]],
-[[2,2],[0,0]]:[[0,0],[2,2]],
-[[0,0],[2,2]]:[[0,0],[2,2]],	
-[[2,0],[2,2]]:[[0,2],[2,2]],
-[[0,2],[2,2]]:[[2,0],[2,2]],
-[[2,2],[2,2]]:[[2,2],[2,2]],
-[[2,0],[0,0]]:[[0,0],[0,0]],
-	too ard, going to abandon brb
