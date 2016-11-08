@@ -25,7 +25,6 @@ DISPLAYSURF.fill(WHITE)
 # 0= air, 1 = solid 2= water
 
 
-color_dict={0:BACKGROUND_GRAY,1:BLACK,2:BLUE}
 
 
 
@@ -35,8 +34,8 @@ def display_map(cell_map):
 	size = 16
 	for x in range(x_len):
 		for y in range(y_len):
-			pygame.draw.rect(DISPLAYSURF, color_dict[cell_map.map[y][x]], (size*x, size*y, size, size))
-			#print(size*(x+1),size*(y+1),size*x,size*y)
+			pygame.draw.rect(DISPLAYSURF, cell_map.map[y][x].color, (size*x, size*y, size, size))
+			
 
 	
 	
@@ -48,7 +47,9 @@ while True:
 			pygame.quit()
 			sys.exit()
 	DISPLAYSURF.fill(WHITE)
+	cell_map.execute_map()
 	display_map(cell_map)
+	
 	#pygame.draw.rect(DISPLAYSURF, BLACK, (200, 150, 100, 50))
 	pygame.display.update()
 	
