@@ -1,4 +1,5 @@
 
+import math
 
 class Abstract_Block:
 	color=(0,0,0)
@@ -18,10 +19,80 @@ class Empty_Block(Abstract_Block):
 
 class Water_Block(Abstract_Block):
 	color=(0,0,255)
+	def __init__(self,x,y,cell_map):
+		super(Water_Block,self).__init__(x,y,cell_map)
+		self.level=100;
 	def execute(self):
-		print("executing Water Blocks")
+		for i in range(len(cell_map[0])):
+			for j in range(0, (len(cell_map)),2):
+				margulous_result= execute_vertical_margulous(i,j)
+				cell_map[j][i]=margulous_result[0]
+				cell_map[j+1][i]=margulous_result[1]
 
-class Rock_Block(Abstract_Block):
+		for i in range(0, len(cell_map[0]),2):
+			for j in range((len(cell_map))):
+				margulous_result= execute_horizontal_margulous(i,j)
+				cell_map[j][i]=margulous_result[0]
+				cell_map[j][i+1]=margulous_result[1]
+
+		for i in range(len(cell_map[0])):
+			for j in range(1, (len(cell_map)),2):
+				margulous_result= execute_vertical_margulous(i,j)
+				cell_map[j][i]=margulous_result[0]
+				cell_map[j+1][i]=margulous_result[1]
+		
+		for i in range(1, len(cell_map[0]),2):
+			for j in range((len(cell_map))):
+				margulous_result= execute_horizontal_margulous(i,j)
+				cell_map[j][i]=margulous_result[0]
+				cell_map[j][i+1]=margulous_result[1]
+
+		for i in range( len(cell_map[0])):
+			for j in range((len(cell_map))):
+				if cell_map[j][i].__class__.__name__=="Water_Block":
+					if cell_map[j][i].level == 0:
+						cell_map[j][i]==Empty_Block(i,j,cell_map)
+
+
+		print("executing Water Blocks")
+	
+	def execute_vertical_margulous(x,y):
+		top= cell_map[y][x]
+		bottom= cell_map[y+1][x]
+		bottom_capacity=128
+		if top.__class__.__name__=="Water_Block" and bottom.__class__.__name__=="Water_Block" and bottom!=None:
+			level_sum=top.level+bottom.level
+			if top.level> 128:
+				bottom_capacity=top+1
+			bottom.level= bottom_capacity
+			top.level = level_sum- bottom_capacity
+		return [top,bottom]
+
+	def execute_horizontal_margulous(x,y):
+		left= cell_map[y][x]
+		right= cell_map[y][x+1]
+		if left.__class__.__name__=="Water_Block" and right.__class__.__name__=="Water_Block" and right!=None:
+			level_sum=left.level+right.level
+			left.level=math.ceil(level_sum/2.0)
+			right.level=math.floor(level_sum/2.0)
+		return [left,right]
+	def normalise_block(block):
+		if block.__class__.__name__=="Water_Block":
+			return block.level
+		else:
+			return 0
+
+		
+	
+	
+
+
+	
+class Solid_Block(Abstract_Block):
+	def execute(self):
+		print("executing Solid Blocks")
+
+class Rock_Block(Abstract_Block,Solid_Block):
 	color=(128,128,128)
 	def execute(self):
 		print("executing Rock Blocks")

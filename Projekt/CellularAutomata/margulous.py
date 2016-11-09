@@ -31,4 +31,6 @@ def set_margulous_at(input,x,y,matrix):
 	if x>=0 and (x+1)<x_size and >=0 and (y+1)<y_size
 		matrix[y+1][x+1]=down_right
 	
+
+
 	
