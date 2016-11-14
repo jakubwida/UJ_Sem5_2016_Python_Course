@@ -38,5 +38,16 @@ class Cell_Map:
 	def __str__(self):
 		return self.map
 
+	def get_cell(x,y):
+		if x>=0 and x<self.x_len and y>=0 and y<=self.y_len:
+			return self.map[y][x]
+		else return None;
+
+	def execute_map(self):
+		for x,row in enumerate(self.map):
+			for y,element in enumerate(row):
+				
+			
+
 cm= Cell_Map("map_2.txt")
 print(cm)
