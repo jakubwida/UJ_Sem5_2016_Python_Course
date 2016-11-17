@@ -1,9 +1,10 @@
 import math
+
 class Point:
 	""" Klasa reprezentujaca punkty na plaszczyznie. """
 	def __init__(self, x=0, y=0):  # konstuktor
-		self.x = x
-        	self.y = y
+		self.x = round(float(x),6)
+		self.y = round(float(y),6)
 
 	def __str__(self):         # zwraca string "(x, y)"
 		return("({},{})".format(self.x,self.y))
@@ -38,12 +39,40 @@ class Point:
 
 import unittest
 
-class TestPoint(unittest.TestCase): pass
+class TestPoint(unittest.TestCase): 
+	def setUp(self): pass
 
-p1 = Point(10.10,2)
-p2 = Point(10.20,10.20)
-print(p1+p2)
-print(p1-p2)
-print(p1*p2)
-print(p1.cross(p2))
-print(p1.length())
+	def test_str(self):
+		self.assertEqual(Point(1.2,5).__str__(),"(1.2,5.0)")
+
+	def test_repr(self):
+		self.assertEqual(Point(1.2,5).__repr__(),"Point(1.2,5.0)")
+
+	def test_eq(self):
+		self.assertTrue(Point(1.2,5)==Point(1.2,5))
+		self.assertFalse(Point(1.2,5)==Point(1.4,5))
+
+	def test_ne(self):
+		self.assertFalse(Point(1.2,5)!=Point(1.2,5))
+		self.assertTrue(Point(1.2,5)!=Point(1.4,5))
+
+	def test_add(self):
+		self.assertEqual(Point(1.2,5)+Point(1.2,5.7),Point(2.4,10.7))
+
+	def test_sub(self):
+		self.assertEqual(Point(1.2,5)-Point(1.2,5.7),Point(0,-0.7))
+
+	def test_mul(self):
+		self.assertEqual(Point(1.2,5)*Point(1.2,3),16.44)
+
+	def test_cross(self):
+		self.assertEqual(Point(1.2,5).cross(Point(1.2,3)),(1.2*3-5*1.2))
+
+	def test_length(self):
+		self.assertEqual(Point(4,3).length(),5)
+
+if __name__ == '__main__':
+    unittest.main()  
+
+
+
