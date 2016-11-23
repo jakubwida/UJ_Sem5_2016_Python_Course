@@ -127,7 +127,7 @@ class Cell_Map:
 				element.level-=given
 				neighbor.new_level+=given
 cm= Cell_Map("map_2.txt")
-for i in range(400):
-	cm.execute_map()	
-	print(i)
-print(cm)
+#for i in range(400):
+#	cm.execute_map()	
+#	print(i)
+#print(cm)
