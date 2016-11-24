@@ -46,23 +46,28 @@ class Frac:
 	def __repr__(self):        # zwraca "Frac(x, y)"
 		return("Frac({},{})".format(self.x,self.y))
 
+	def __eq__(self, other): 
+		other = self.frac_from_ambigous(other)
+		#print("testing cmp",self,other,self.x,self.y,other.x,other.y,( self.x==other.x and self.y==other.y))
+		return (float(self) ==float(other))
+
 	def __cmp__(self, other): # porownywanie
 		other = self.frac_from_ambigous(other)
-		print("testing cmp",self,other)
-		if self.x==other.x and self.y==other.y:
-			return True;
-		else:
-			return False;
+		return cmp(float(self),(float(other)))
 
 	def __add__(self, other):   # frac1+frac2, frac+int
 		frac_2 = self.frac_from_ambigous(other);
 		frac_1 = Frac(self.x,self.y)
-		frac_1_coef= frac_1.x
-		frac_1.x = frac_1.x*frac_2.y
-		frac_1.y = frac_1.y*frac_2.y
-		frac_2.x = frac_2.x *frac_1_coef
+		
+		temp =frac_1.y
+		frac_1.x=frac_1.x*frac_2.y
+		frac_1.y=frac_1.y*frac_2.y
 
-		return Frac(frac_1.x+frac_2.x,frac_1.y)
+		frac_2.x=frac_2.x*temp
+		frac_2.y=frac_2.y*temp
+
+		out_x = frac_1.x+frac_2.x;
+		return Frac(out_x,frac_2.y)
 	
 	__radd__ = __add__              # int+frac
 
@@ -101,15 +106,17 @@ class Frac:
 		return Frac(self.y,self.x)
 
 	def __float__(self):       # float(frac)
-		return float(x/y)
+		return (float(self.x)/float(self.y))
 
 # Kod testujacy modul.
 
-f1 = Frac(10,20)
-f2= Frac(1,2)
+f1 = Frac(5,20)
+f2= Frac(3,4)
 
 print(f1);
-print(f2);
+print(float(f2));
+
+
 import unittest
 
 class TestFrac(unittest.TestCase): 
@@ -119,9 +126,15 @@ class TestFrac(unittest.TestCase):
 		self.assertEqual(Frac(10,1).__str__(),"10")
 	def test_repr(self):
 		self.assertEqual(Frac(10,20).__repr__(),"Frac(1,2)")
-	def test_cmp(self):
+	def test_eq(self):
 		self.assertTrue(Frac(10,20)==Frac(1,2))
 		self.assertFalse(Frac(5,20)==Frac(10,20))
+
+	def test_cmp(self):
+		self.assertTrue(Frac(15,20)>Frac(10,20))
+		self.assertTrue(Frac(10,20)==Frac(10,20))
+		self.assertTrue(Frac(5,20)<Frac(10,20))
+
 	def test_add(self):
 		self.assertEqual(Frac(10,20)+Frac(5,20),Frac(15,20))
 		self.assertEqual(Frac(10,20)+1,Frac(3,2))
@@ -147,7 +160,7 @@ class TestFrac(unittest.TestCase):
 		self.assertEqual(Frac(5,20),~Frac(20,5))
 		self.assertEqual(20,~Frac(1,20))
 	def test_float(self):
-		self.assertEqual(Frac(5,20),5/20)
+		self.assertEqual(float(Frac(5,20)),5.0/20.0)
 
 
 if __name__ == '__main__':
