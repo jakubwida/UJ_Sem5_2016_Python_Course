@@ -1,15 +1,26 @@
+
+
 from fractions import gcd
+
+class FractionError(Exception): 
+	"""Klasa bledow obslugujaca ulamki"""
+
+
+
+
 class Frac:
 	"""Klasa reprezentujaca ulamki."""
+	
 
 	def __init__(self, x=0, y=1):
 		# Sprawdzamy, czy y=0.
 		if y==0:
-			raise IndexError("Divide by 0 error")
+			raise FractionError("Divide by 0 error")
 		else:
 			self.x = int(x)
 			self.y = int(y)
 			self.simplify()
+
 	def frac_from_int(self,integer):
 		return Frac(integer,1)
 
@@ -19,7 +30,7 @@ class Frac:
 		elif ambigous.__class__.__name__=="int":
 			return self.frac_from_int(ambigous)
 		else:
-			raise IndexError("Improper type added")
+			raise FractionError("Improper type added")
 
 	def simplify(self):
 		gcd_val = gcd(self.x,self.y)
@@ -36,6 +47,8 @@ class Frac:
 		return("Frac({},{})".format(self.x,self.y))
 
 	def __cmp__(self, other): # porownywanie
+		other = self.frac_from_ambigous(other)
+		print("testing cmp",self,other)
 		if self.x==other.x and self.y==other.y:
 			return True;
 		else:
@@ -55,7 +68,11 @@ class Frac:
 
 
 	def __sub__(self, other):  # frac1-frac2, frac-int
-		return self.add(self,-self.frac_from_ambigous(other))
+		try:
+			out = self+-self.frac_from_ambigous(other)
+		except FractionError as exception:
+			raise FractionError("Improper type subtracted")
+		return self+-self.frac_from_ambigous(other)
 
 	def __rsub__(self, other):      # int-frac  //moze generowac problemy
 		# tutaj self jest frac, a other jest int!
@@ -71,8 +88,8 @@ class Frac:
 	def __div__(self, other):  # frac1/frac2, frac/int
 		return(self*(~self.frac_from_ambigous(other)))
 
-	def __rdiv__(self, other): pass# int/frac
-		
+	def __rdiv__(self, other): # int/frac
+		return(self.frac_from_ambigous(other)*(~self))
 	# operatory jednoargumentowe
 	def __pos__(self):  # +frac = (+1)*frac
 		return Frac(self.x,self.y)
@@ -88,20 +105,53 @@ class Frac:
 
 # Kod testujacy modul.
 
-f1 = Frac(5,20)
-f2= Frac(3,16)
-
-print(f1);
-print(~f1);
-print(-f1);
+f1 = Frac(10,20)
+f2= Frac(1,2)
 
 print(f1);
 print(f2);
-print(f1/f2);
-print(f2/f1);
-print(f1*f2);
-print(f1+f2);
-print(f1-f2);
 import unittest
 
-class TestFrac(unittest.TestCase): pass
+class TestFrac(unittest.TestCase): 
+	def setUp(self): pass
+	def test_str(self):
+		self.assertEqual(Frac(10,20).__str__(),"1/2")
+		self.assertEqual(Frac(10,1).__str__(),"10")
+	def test_repr(self):
+		self.assertEqual(Frac(10,20).__repr__(),"Frac(1,2)")
+	def test_cmp(self):
+		self.assertTrue(Frac(10,20)==Frac(1,2))
+		self.assertFalse(Frac(5,20)==Frac(10,20))
+	def test_add(self):
+		self.assertEqual(Frac(10,20)+Frac(5,20),Frac(15,20))
+		self.assertEqual(Frac(10,20)+1,Frac(3,2))
+		self.assertEqual(1+Frac(10,20),Frac(3,2))
+	def test_sub(self):
+		self.assertEqual(Frac(10,20)-Frac(5,20),Frac(5,20))
+		self.assertEqual(Frac(10,20)-1,Frac(-1,2))
+		self.assertEqual(1-Frac(10,20),Frac(1,2))
+	def test_mul(self):
+		self.assertEqual(Frac(10,20)*Frac(5,20),Frac(5,40))
+		self.assertEqual(Frac(10,20)*2,1)
+		self.assertEqual(2*Frac(10,20),1)
+	def test_div(self):
+		self.assertEqual(Frac(10,20)/Frac(5,20),2)
+		self.assertEqual(Frac(10,20)/2,Frac(1,4))
+		self.assertEqual(2/Frac(10,20),4)
+	def test_pos(self):
+		self.assertEqual(Frac(10,20),+Frac(10,20))
+	def test_neg(self):
+		self.assertEqual(Frac(-5,20),-Frac(5,20))
+		self.assertEqual(Frac(5,20),-Frac(-5,20))
+	def test_invert(self):
+		self.assertEqual(Frac(5,20),~Frac(20,5))
+		self.assertEqual(20,~Frac(1,20))
+	def test_float(self):
+		self.assertEqual(Frac(5,20),5/20)
+
+
+if __name__ == '__main__':
+    unittest.main()  
+
+		
+
