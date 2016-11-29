@@ -15,10 +15,10 @@ class Triangle:
 			raise ValueError("not a valid triangle")
 
 	def __str__(self):          # "[(x1, y1), (x2, y2), (x3, y3)]"
-		return "[({},{}),({},{}),({},{})]".format(self.pt1.x,self.pt1.y,self.pt2.x,self.pt2.y,self.pt3.x,self.pt2.y)
+		return "[({},{}),({},{}),({},{})]".format(self.pt1.x,self.pt1.y,self.pt2.x,self.pt2.y,self.pt3.x,self.pt3.y)
 
 	def __repr__(self):         # "Triangle(x1, y1, x2, y2, x3, y3)"
-		return "Triangle({},{},{},{},{},{})".format(self.pt1.x,self.pt1.y,self.pt2.x,self.pt2.y,self.pt3.x,self.pt2.y)
+		return "Triangle({},{},{},{},{},{})".format(self.pt1.x,self.pt1.y,self.pt2.x,self.pt2.y,self.pt3.x,self.pt3.y)
 
 	def __eq__(self, other):    # obsługa tr1 == tr2
 		if(self.pt1==other.pt1 and self.pt2 == other.pt2 and self.pt3==other.pt3):
@@ -46,9 +46,9 @@ class Triangle:
 		return Point(x,y)
 
 	def make4(self):           # zwraca listę czterech mniejszych
-		p1_2 = self.midpoint(self,pt1,self.pt2)
-		p1_3 = self.midpoint(self,pt1,self.pt3)
-		p2_3 = self.midpoint(self,pt2,self.pt3)
+		p1_2 = self.midpoint(self.pt1,self.pt2)
+		p1_3 = self.midpoint(self.pt1,self.pt3)
+		p2_3 = self.midpoint(self.pt2,self.pt3)
 		tr1= Triangle(self.pt1.x,self.pt1.y,p1_2.x,p1_2.y,p1_3.x,p1_3.y)
 		tr2= Triangle(self.pt2.x,self.pt2.y,p1_2.x,p1_2.y,p2_3.x,p2_3.y)
 		tr3= Triangle(self.pt3.x,self.pt3.y,p1_3.x,p1_3.y,p2_3.x,p2_3.y)
@@ -81,9 +81,16 @@ class TestTriangle(unittest.TestCase):
 	def test_move(self):
 		self.assertEqual(Triangle(0,0,1,1,1,2).move(1,1),Triangle(1,1,2,2,2,3))
 
+	def test_make4(self):
+		
+		self.assertTrue((-1)!=Triangle(0,0,0,1,1,0).make4().index(Triangle(0,0,0,0.5,0.5,0)))
+		self.assertTrue((-1)!=Triangle(0,0,0,1,1,0).make4().index(Triangle(0.5,0.5,0,0.5,0.5,0)))
+		self.assertTrue((-1)!=Triangle(0,0,0,1,1,0).make4().index(Triangle(0,0.5,0.5,0.5,0,1)))
+		self.assertTrue((-1)!=Triangle(0,0,0,1,1,0).make4().index(Triangle(0.5,0.5,0.5,0,1,0)))
+
+
 if __name__ == '__main__':
     unittest.main()  
-
 
 
 
