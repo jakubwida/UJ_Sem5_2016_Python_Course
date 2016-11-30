@@ -45,7 +45,7 @@ def simplify_block(string):
 		return 1
 
 color_dict={0:WHITE,1:BLUE,2:BLACK}
-
+string_dict={0:"000",1:"100",2:"sol"}
 
 if not os.path.exists(map_filename):
 	map_file =open(map_filename, 'w')
@@ -121,7 +121,7 @@ while True:
 				cursorval=cursorval+1
 				if cursorval == 3:
 					cursorval =0	
-			if(pressed[1]==True):
+			if(pressed[0]==True):
 				set_int_map_to_cursorval_from_pos(pos)	
 	
 	DISPLAYSURF.fill(WHITE)

@@ -45,7 +45,7 @@ def simplify_block(string):
 		return 1
 
 color_dict={0:WHITE,1:BLUE,2:BLACK}
-
+string_dict={0:"000",1:"100",2:"sol"}
 
 if not os.path.exists(map_filename):
 	map_file =open(map_filename, 'w')
@@ -64,7 +64,8 @@ size = 32
 print(int_map)
 
 
-
+def save_map(): pass
+#TODO
 
 
 
