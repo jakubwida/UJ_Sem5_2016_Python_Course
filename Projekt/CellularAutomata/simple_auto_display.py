@@ -7,11 +7,14 @@ import simple_auto
 import pygame
 from pygame.locals import*
 
+#argument 1= map.txt, argument 2 = FPS
+arguments =sys.argv
+
 pygame.init()
-FPS = 1
+FPS = int(arguments[2])
 fpsClock = pygame.time.Clock()
 
-cell_map=simple_auto.Cell_Map("map_2.txt");	
+cell_map=simple_auto.Cell_Map(str(arguments[1]));	
 y_len = cell_map.x_len
 x_len = cell_map.y_len
 size = 32
@@ -59,7 +62,7 @@ while True:
 	pygame.display.update()
 	
 	
-	time.sleep(1.0/25)
+	time.sleep(1.0/FPS)
 	
 	
 	pygame.display.update()
