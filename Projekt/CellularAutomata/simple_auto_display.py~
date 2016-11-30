@@ -11,11 +11,7 @@ pygame.init()
 FPS = 1
 fpsClock = pygame.time.Clock()
 
-cell_map=simple_auto.Cell_Map("map_2.txt");	
-y_len = cell_map.x_len
-x_len = cell_map.y_len
-size = 32
-DISPLAYSURF=pygame.display.set_mode((x_len*size,y_len*size),0,32)
+DISPLAYSURF=pygame.display.set_mode((400,300),0,32)
 pygame.display.set_caption("Hello world")
 rectangle = pygame.Rect(10,20,200,300)
 
@@ -37,6 +33,9 @@ def get_color_from_block(block):
 
 
 def display_map(cell_map):
+	y_len = cell_map.x_len
+	x_len = cell_map.y_len
+	size = 32
 	for x in range(x_len):
 		for y in range(y_len):
 			pygame.draw.rect(DISPLAYSURF, get_color_from_block(cell_map.get_cell(x,y)), (size*x, size*y, size, size))
@@ -44,7 +43,7 @@ def display_map(cell_map):
 
 	
 	
-	
+cell_map=simple_auto.Cell_Map("map_2.txt");		
 #pygame.draw.rect(DISPLAYSURF, BLACK, (200, 150, 100, 50))
 while True:
 	for event in pygame.event.get():
