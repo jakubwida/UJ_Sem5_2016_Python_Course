@@ -1,0 +1,1 @@
+jesli w zadaniu napisane jest ze ma nie byc uzywane single list- to nie uzywaj klasy do obslugi listy, tylko wylacznie klasy node z pierwszej strony z lekcja
