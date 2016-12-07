@@ -27,14 +27,14 @@ BLUE=(0,0,255)
 
 
 def int_array_from_file(file):
-	map=[]
+	int_map=[]
 	for x in range(y_len):
 			line = file.readline().replace("\n","").split(",")
 			print(line)
 			for index,element in enumerate(line):
 				line[index]= simplify_block(element)
-			map.append(line)
-	return map
+			int_map.append(line)
+	return int_map
 
 def simplify_block(string):
 	if string=="sol":
@@ -58,15 +58,25 @@ else:
 	x_len=first_line[0]
 	y_len=first_line[1]
 	int_map=int_array_from_file(map_file)
+	map_file.close()
+	
 
 size = 32
 
 print(int_map)
 
 
-def save_map(): pass
+def save_map():
 #TODO
-
+	output = str(x_len)+","+str(y_len)+"\n"
+	for x in range(x_len):
+			for y in range(y_len):
+				output = output+string_dict[int_map[x][y]]+","
+			output=output+"\n"
+	map_file =open(map_filename, 'w')
+	map_file.write(output)
+	map_file.close()
+	print(output)
 
 
 DISPLAYSURF=pygame.display.set_mode((x_len*size,y_len*size),0,32)
@@ -124,7 +134,11 @@ while True:
 					cursorval =0	
 			if(pressed[0]==True):
 				set_int_map_to_cursorval_from_pos(pos)	
-	
+		if event.type == pygame.KEYDOWN:
+        		if event.key == pygame.K_s:
+				save_map()
+
+
 	DISPLAYSURF.fill(WHITE)
 	display_map(int_map)
 	draw_cursor_rectangle()
