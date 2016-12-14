@@ -2,24 +2,27 @@ from random import randint
 import collections
 class RandomQueue:
 
-    def __init__(self):
-	self.deque = collections.deque()
-	self.count=0;
+	def __init__(self):
+		self.dict ={}
+		self.count=0
 
-    def insert(self, item): 
-	self.deque.appendleft(item)
-	self.count=self.count+1
+	def insert(self, item): 
+		self.dict[self.count]=item
+		self.count=self.count+1
 
-    def remove(self):   # zwraca losowy element
-	self.deque.rotate(randint(0,self.count))
-	self.count=self.count-1
-	return self.deque.pop()
+	def remove(self):   # zwraca losowy element
+		index = randint(0,self.count-1)
+		out = self.dict[index]
+		self.dict[index]=self.dict[self.count-1]
+		del self.dict[self.count-1]
+		self.count=self.count-1
+		return out
 
-    def is_empty(self): 
-	return self.count==0
+	def is_empty(self): 
+		return self.count==0
 
-    def is_full(self):
-	return False
+	def is_full(self):
+		return False
 
 
 rd = RandomQueue()
@@ -38,6 +41,5 @@ print(rd.remove())
 print(rd.remove())
 print(rd.remove())
 print(rd.remove())
-
 
 
