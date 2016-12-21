@@ -71,7 +71,9 @@ def save_map():
 	output = str(x_len)+","+str(y_len)+"\n"
 	for x in range(x_len):
 			for y in range(y_len):
-				output = output+string_dict[int_map[x][y]]+","
+				output = output+string_dict[int_map[x][y]]
+				if y<y_len-1:
+					output=output+","
 			output=output+"\n"
 	map_file =open(map_filename, 'w')
 	map_file.write(output)

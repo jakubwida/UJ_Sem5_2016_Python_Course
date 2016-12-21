@@ -59,7 +59,7 @@ else:
 	y_len=first_line[1]
 	int_map=int_array_from_file(map_file)
 	map_file.close()
-	map_file =open(map_filename, 'w')
+	
 
 size = 32
 
@@ -71,9 +71,13 @@ def save_map():
 	output = str(x_len)+","+str(y_len)+"\n"
 	for x in range(x_len):
 			for y in range(y_len):
-				output = output+string_dict[int_map[x][y]]+","
+				output = output+string_dict[int_map[x][y]]
+				if y!=y_len:
+					output=output+","
 			output=output+"\n"
+	map_file =open(map_filename, 'w')
 	map_file.write(output)
+	map_file.close()
 	print(output)
 
 
