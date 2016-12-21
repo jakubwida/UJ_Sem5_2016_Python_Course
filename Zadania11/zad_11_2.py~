@@ -1,0 +1,10 @@
+from zad_11_1 import Number_List_Generator
+
+NLG= Number_List_Generator()
+
+print(NLG.random_list(20))
+
+print(NLG.almost_random_list(20))
+print(NLG.almost_random_list_reversed(20))
+print(NLG.gauss_list(10,20,2))
+print(NLG.repeated_set(5,20))
