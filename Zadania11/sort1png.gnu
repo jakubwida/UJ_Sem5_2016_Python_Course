@@ -1,5 +1,5 @@
-set term pdf
-set output "sort1.pdf"
+set term png
+set output "sort1.png"
 
 set title "Sortowanie X"
 set xlabel "numer pozycji"              # opis osi x
