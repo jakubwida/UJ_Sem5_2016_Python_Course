@@ -33,5 +33,5 @@ def bst_min(root):
 
 print(bst_max(root))
 print(bst_min(root))
-print(bst_max(None))
+print(bst_max(None)) #bedzie wyrzucac blad
 
