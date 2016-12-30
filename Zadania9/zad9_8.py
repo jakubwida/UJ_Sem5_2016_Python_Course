@@ -16,12 +16,16 @@ b.left=e
 #print(root)
 
 def bst_max(root):
+	if root==None:
+		raise ValueError("podane drzewo jest puste")
 	temp_node = root;
 	while temp_node.right!=None:
 		temp_node=temp_node.right
 	return temp_node.data
 
 def bst_min(root):
+	if root==None:
+		raise ValueError("podane drzewo jest puste")
 	temp_node = root;
 	while temp_node.left!=None:
 		temp_node=temp_node.left
@@ -29,3 +33,5 @@ def bst_min(root):
 
 print(bst_max(root))
 print(bst_min(root))
+print(bst_max(None))
+
