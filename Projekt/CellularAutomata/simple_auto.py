@@ -126,7 +126,7 @@ class Cell_Map:
 				given = int(math.ceil(want/2.0))
 				element.level-=given
 				neighbor.new_level+=given
-cm= Cell_Map("map_2.txt")
+#cm= Cell_Map("map_2.txt")
 #for i in range(400):
 #	cm.execute_map()	
 #	print(i)
