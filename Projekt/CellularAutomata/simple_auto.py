@@ -1,5 +1,6 @@
 import math
 class Cell: pass
+'''klasa Water Cell, odpowiada komorce (bloczkowi) z roznym poziomem wody'''
 class Water_Cell(Cell):
 	def __init__(self):
 		self.level=0
@@ -9,14 +10,16 @@ class Water_Cell(Cell):
 	
 	def __str__(self):
         	return str(self.level).zfill(3)
+'''klasa Solid Cell, odpowiada komorce (bloczkowi) stalej'''
 class Solid_Cell(Cell): 
 	def __str__(self):
         	return "sol"
-
+'''klasa Solid Cell, odpowiada obiektowy mapy wszystkich komorek, wraz z ich zarzadzaniem'''
 class Cell_Map:
 	def __init__(self,filename):
 		self.parse_map(filename)
 		self.left_focus=False
+	'''funkcja odczytujaca mape z pliku'''
 	def parse_map(self,filename):
 		file =open(filename,'r')
 		first_line=map(int,file.readline().replace("\n","").split(","))
@@ -31,7 +34,7 @@ class Cell_Map:
 			self.map.append(line)
 			
 
-		
+	'''funkcja odczytujaca rodzaj komorki (bloczka) ze string'''	
 	def block_from_string(self,block_name):
 		if block_name=="sol":
 			return Solid_Cell()
@@ -39,6 +42,7 @@ class Cell_Map:
 			wc = Water_Cell()
 			wc.level=int(block_name)
 			return wc 
+	'''funkcja zrzucajaca mape do string'''
 	def __str__(self):
 		out=""
 		for line in self.map:
@@ -46,18 +50,20 @@ class Cell_Map:
 				out=out+","+element.__str__()
 			out=out+"\n"  
 		return out
-				#can be improved
-
+				
+	'''funkcja zwracajaca komorke na pozycji mapy'''
 	def get_cell(self,x,y):
 		if x>=0 and x<self.x_len and y>=0 and y<=self.y_len:
 			return self.map[y][x]
 		else:
 			return None;
+	'''funkcja sprawdzajaca czy komorka nie jest stala lub poza mapa'''
 	def check_cell(self,Cell):
 		if Cell==None or Cell.__class__.__name__=="Solid_Cell":
 			return False
 		else:
 			return True
+	'''funkcja obliczajaca ile komorka moze przyjac wody'''
 	def calculate_capacity(self,x,y):
 		cell_above = self.get_cell(x,y-1)
 		if (self.check_cell(cell_above)):
@@ -67,7 +73,7 @@ class Cell_Map:
 				return 100
 		else:
 			return 100
-		#possible improvements
+	'''funkcja odbierajaca ile moze z poziomu wody, (do zera)'''
 	def subtract_what_possible_from_level(self,cell,how_much):
 		if(cell.level>how_much):
 			cell.level=cell.level-how_much
@@ -76,6 +82,7 @@ class Cell_Map:
 			temp=cell.level
 			cell.level=0
 			return temp
+	'''funkcja wykonujaca krok na mapie'''
 	def execute_map(self):
 		self.left_focus=not self.left_focus
 		#initial iteration
@@ -93,32 +100,32 @@ class Cell_Map:
 					down=self.get_cell(x,y+1)
 					left=self.get_cell(x-1,y)
 					right = self.get_cell(x+1,y)
-					#down:
+					'''dzialania wobec komorki ponizej'''
 					if(self.check_cell(down)):
 						down_level_difference = down.capacity-down.level
 						if(down_level_difference>0):
 							down.new_level+=self.subtract_what_possible_from_level(element,down_level_difference)
-					#left/right 
+					'''dzialania wobec komorek sasiednich na tym samym poziomie'''
 					if(self.left_focus):
 						self.do_left_right(element,left)
 						self.do_left_right(element,right)
 					else:
 						self.do_left_right(element,right)
 						self.do_left_right(element,left)
-					#up
-						#pressure might not work will try margulous
+					
+					'''dzialania wobec komorki powyzej'''
 					if(self.check_cell(up) and element.level>element.capacity):
 						if(up.old_level<element.level):
 							given = element.level - element.capacity
 							element.level=element.capacity
 							up.new_level+=given
-		#finalisation - can be optimized			
+		'''finalizacja'''			
 		for y,row in enumerate(self.map):
 			for x,element in enumerate(row):
 				if element.__class__.__name__ =="Water_Cell":
 					element.level=element.new_level+element.level
 					
-			
+	'''funkcja dzialania na sasiednie komorki wody (na tym samym poziomie)'''		
 	def do_left_right(self,element,neighbor):
 		if(self.check_cell(neighbor)):
 			want = element.level-neighbor.old_level
@@ -126,8 +133,4 @@ class Cell_Map:
 				given = int(math.ceil(want/2.0))
 				element.level-=given
 				neighbor.new_level+=given
-#cm= Cell_Map("map_2.txt")
-#for i in range(400):
-#	cm.execute_map()	
-#	print(i)
-#print(cm)
+

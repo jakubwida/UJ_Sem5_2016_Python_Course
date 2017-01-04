@@ -1,4 +1,4 @@
-
+''' edytor przyjmuje 3 argumenty- nazwe pliku, rszerokosc i wysokosc mapy. Jesli plik juz istnieje to zostanie otwarty, a argumenty dot rozmiaru zostana zignorowane, i nie musza byc wprowadzane. Edytor kliknieciem lewego przycisku myszy ustawia blok w miejscu klikniecia, prawym zmiena rodzaj bloku, przycisk na klawiaturze "s" zapisuje mape do podanej na starcie nazwy pliku'''
 
 import sys
 print(sys.version)
@@ -19,8 +19,8 @@ map_filename=str(arguments[1])
 
 WHITE=(255,255,255)
 BLACK=(0,0,0)
-GRAY=(100,100,100)
-BACKGROUND_GRAY=(200,200,200)
+#GRAY=(100,100,100)
+#BACKGROUND_GRAY=(200,200,200)
 BLUE=(0,0,255)
 
 
