@@ -18,7 +18,7 @@ I: aby uruchomić symulator:
 II: aby uruchomic edytor:
 	komenda: "python simple_auto_editor.py map_5.txt 20 20"
 
-	Powyższa komenda utworzy pustą mape na plik map_5.txt o rozmiarze 20x20 (kolejno x,y).
+	Powyższa komenda utworzy pustą mapę, zpisywaną na plik "map_5.txt" o rozmiarze 20x20 (kolejno x,y).
 	Jesli plik map_5.txt istnieje i został stworzony przy uzyciu edytora i w nim zapisany to
 	zostanie on otwarty. Nie bedzie konieczne w takich sytuacjach podawać argumentów
 	rozmiaru mapy. Edytor nie otwiera plików pustych.
