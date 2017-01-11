@@ -26,12 +26,13 @@ class Cell_Map:
 		self.x_len=first_line[0]
 		self.y_len=first_line[1]
 		self.map=[]
-		for x in range(self.y_len):
+		for y in range(self.y_len):
 			line = file.readline().replace("\n","").split(",")
 			print(line)
 			for index,element in enumerate(line):
 				line[index]= self.block_from_string(element)
 			self.map.append(line)
+		print(self)
 			
 
 	'''funkcja odczytujaca rodzaj komorki (bloczka) ze string'''	
@@ -45,6 +46,7 @@ class Cell_Map:
 	'''funkcja zrzucajaca mape do string'''
 	def __str__(self):
 		out=""
+		out = out +"x:"+ str(self.x_len)+" y:"+ str(self.y_len)+"\n"
 		for line in self.map:
 			for element in line:
 				out=out+","+element.__str__()
